@@ -3,8 +3,7 @@ const deskTaskInput = document.getElementById('description-task'); // the tasks 
 const todoWrapper = document.querySelector('.todos-wrapper'); // the tasks section where they will be displayed
 
 let tasks; // this is an empty array of our taks
-!localStorage.tasks ? tasks = []: tasks = JSON.parse(localStorage.getItem('tasks')); // check the local storage of any tasks
-
+!localStorage.tasks ? tasks = [] : tasks = JSON.parse(localStorage.getItem('tasks')); // check the local storage of any tasks
 
 // const tasks = {
 //   description: 'Create todo-list',
@@ -15,7 +14,7 @@ let tasks; // this is an empty array of our taks
 function Task(description) { // this is a constructor for each task
   this.description = description; // this comes from input
   this.completed = false; // by default the task will be not completed
-  this.index = tasks.length+1; // the index of inputed task
+  this.index = tasks.length + 1; // the index of inputed task
 }
 
 const createTemplate = (task, index) => { // this is a template wich we will send to HTML
@@ -25,14 +24,14 @@ const createTemplate = (task, index) => { // this is a template wich we will sen
       <div class="description">${task.description}</div>
       
     </div>
-  `
+  `;
 };
 
 const addToHTML = () => { // adding the list of tasks to HTML, to out DIV
-  todoWrapper.innerHTML = ""; // empty the lit of tasks in HTML
-  if(tasks.length > 0) { // if the array of taks is not empty
+  todoWrapper.innerHTML = ''; // empty the lit of tasks in HTML
+  if (tasks.length > 0) { // if the array of taks is not empty
     tasks.forEach((item, index) => { // iterate out array each task and send it to HTML
-      todoWrapper.innerHTML += createTemplate(item, index); // each item we will add to function create an template
+      todoWrapper.innerHTML += createTemplate(item, index); 
     });
   }
 };
@@ -43,8 +42,8 @@ const updateLocal = () => { // add to Local storage
   localStorage.setItem('tasks', JSON.stringify(tasks)); // save as a string using JSON
 };
 
-const completeTask = index => { // function for change the comple status to complete
-  tasks[index].completed = !tasks[index].completed; // add onclick the calling the function which will set the index of a task
+const completeTask = (index) => { // function for change the comple status to complete
+  tasks[index].completed = !tasks[index].completed; //
 };
 
 addTasksBtn.addEventListener('click', () => { // by clicking the button
