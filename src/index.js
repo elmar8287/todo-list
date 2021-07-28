@@ -3,8 +3,9 @@ const deskTaskInput = document.getElementById('description-task'); // the tasks 
 const todoWrapper = document.querySelector('.todos-wrapper'); // the tasks section where they will be displayed
 
 let tasks; // this is an empty array of our taks
+/* eslint-disable */
 !localStorage.tasks ? tasks = [] : tasks = JSON.parse(localStorage.getItem('tasks')); // check the local storage of any tasks
-
+/* eslint-anable */
 // const tasks = {
 //   description: 'Create todo-list',
 //   completed: false,
@@ -16,7 +17,7 @@ function Task(description) { // this is a constructor for each task
   this.completed = false; // by default the task will be not completed
   this.index = tasks.length + 1; // the index of inputed task
 }
-
+/* eslint-disable */
 const createTemplate = (task, index) => { // this is a template wich we will send to HTML
   return `
     <div class="todo-item ${task.completed ? 'checked' : ''}">
@@ -26,7 +27,7 @@ const createTemplate = (task, index) => { // this is a template wich we will sen
     </div>
   `;
 };
-
+/* eslint-anable */
 const addToHTML = () => { // adding the list of tasks to HTML, to out DIV
   todoWrapper.innerHTML = ''; // empty the lit of tasks in HTML
   if (tasks.length > 0) { // if the array of taks is not empty
@@ -41,11 +42,11 @@ addToHTML();
 const updateLocal = () => { // add to Local storage
   localStorage.setItem('tasks', JSON.stringify(tasks)); // save as a string using JSON
 };
-
+/* eslint-disable */
 const completeTask = (index) => { // function for change the comple status to complete
   tasks[index].completed = !tasks[index].completed; //
 };
-
+/* eslint-anable */
 addTasksBtn.addEventListener('click', () => { // by clicking the button
   tasks.push(new Task(deskTaskInput.value)); // add new task
   updateLocal(); // save to Local Storage
