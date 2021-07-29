@@ -64,6 +64,7 @@ h1 {
   width: 100%;
   border-top: 1px solid rgb(224, 224, 224);
   padding: 25px 0 15px 5px;
+  align-items: center;
 }
 
 .btn-delete {
@@ -71,8 +72,11 @@ h1 {
   border-radius: 3px;
 }
 
-.description {
-  padding-left: 10px;
+.elmar {
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .clear-all {
@@ -81,4 +85,24 @@ h1 {
   background-color: rgb(219, 219, 219);
   margin: 10px 0 0 0;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.checked {
+  text-decoration: line-through;
+  color: red;
+  background-color: rgb(208, 245, 207);
+}
+
+.deletion {
+  background-color: rgb(233, 149, 149);
+
+}
+
+edition {
+  background-color: red;
+}
+
+.draggable.dragging {
+  opacity: 0.2;
 }
