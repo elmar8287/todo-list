@@ -8,6 +8,8 @@ Tasks to do:
 - Project 2: Interactive list.
 - Project 3: Add and remove items.
 
+## View short video ![here] (./src/TODO_ELMAR.mp4)
+
 ## Live demo
 
 You can visit live version via [link](https://elmar8287.github.io/todo-list/)
