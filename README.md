@@ -9,7 +9,7 @@ Tasks to do:
 - Project 3: Add and remove items.
 
 ## View short video
-![here] (./src/TODO_ELMAR.MP4)
+![here](https://www.loom.com/share/dd6de76393ed48b5ac185550aa1c2fd6)
 
 ## Live demo
 
