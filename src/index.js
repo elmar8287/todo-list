@@ -6,11 +6,6 @@ let tasks; // this is an empty array of our taks
 /* eslint-disable */
 !localStorage.tasks ? tasks = [] : tasks = JSON.parse(localStorage.getItem('tasks')); // check the local storage of any tasks
 /* eslint-anable */
-// const tasks = {
-//   description: 'Create todo-list',
-//   completed: false,
-//   index: 1
-// }
 
 let todoItemElems = [];
 
@@ -22,15 +17,17 @@ function Task(description) { // this is a constructor for each task
 /* eslint-disable */
 const createTemplate = (task, index) => { // this is a template wich we will send to HTML
   return `
-    <div class="todo-item ${task.completed ? 'checked' : ''} draggable" draggable='true'>
-    <input onclick="completeTask(${index})" class="btn-competed" type="checkbox" ${task.completed ? 'checked' : ''}>
+    <li class="todo-item ${task.completed ? 'checked' : ''} draggable" draggable='true'>
+      
+      <input onclick="completeTask(${index})" class="btn-competed checkbox" type="checkbox" ${task.completed ? 'checked' : ''}>
       <div class="elmar">
         <div class="description">${task.description}</div>
         <div class="buttons">
+          <button onclick="editTask(${index})" type="button" class="btn-delete">Edit</button>
           <button onclick="deleteTask(${index})" type="button" class="btn-delete">Delete</button>
           </div>
-      </div>
-    </div>
+      </div>   
+    </li>
   `;
 
 };
@@ -78,56 +75,96 @@ const deleteTask = index => { // function for delete button
     addToHTML();
   }, 500);
 };
+class DND {
+  constructor() {
+    this.prevRow;
+  }
 
-// const editTask = index => {
-//   let span = tasks[index].description;
-//   // todoItemElems[index].classList.add('edition');
-//   let aaa = document.createElement('input');
-//   aaa.type = 'text';  
-//   span = aaa.value;
-// };
+  setEventListeners() {
+    let listItems = document.querySelectorAll('li');
+  
+    listItems.forEach((listItem) => {
+  
+      listItem.addEventListener('dragstart', (e) => this.start(e));
+      listItem.addEventListener('dragover', (e) => this.over(e));
+      listItem.addEventListener('drop', (e) => this.drop(e));  
+    });
+  }
 
-const draggables = document.querySelectorAll('.draggable')
-const containers = document.querySelectorAll('.todos-wrapper')
+  start(e) {
+    this.prevRow = e.target;
 
-draggables.forEach(draggable => {
-  draggable.addEventListener('dragstart', () => {
-    draggable.classList.add('dragging')
-  })
+    let HTMLContent = e.target.innerHTML;
+    let checkboxStatus = e.target.querySelector('input').checked;
 
-  draggable.addEventListener('dragend', () => {
-    draggable.classList.remove('dragging')
-  })
-})
+    e.dataTransfer.setData('html-content', HTMLContent);
+    e.dataTransfer.setData('checkbox-status', checkboxStatus);
+  }
 
-containers.forEach(container => {
-  container.addEventListener('dragover', e => {
-    e.preventDefault()
-    const afterElement = getDragAfterElement(container, e.clientY)
-    const draggable = document.querySelector('.dragging')
-    if (afterElement == null) {
-      container.appendChild(draggable)
-    } else {
-      container.insertBefore(draggable, afterElement)
+  over(e) {
+    let currRow;
+
+    if (e.target.parentNode.tagName === 'LI') currRow = e.target.parentNode;
+    else if (e.target.parentNode.tagName === 'DIV') currRow = e.target.parentNode.parentNode;
+    else currRow = e.target;
+
+    e.preventDefault();
+
+    if (this.prevRow !== currRow) {
+      this.prevRow.innerHTML = currRow.innerHTML;
+      this.prevRow.querySelector('input').checked = currRow.querySelector('input').checked;
+      currRow.innerHTML = '';
+      this.prevRow = currRow;
     }
-  })
-})
+  }
 
-function getDragAfterElement(container, y) {
-  const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
+  drop(e) {
+    const HTMLContent = e.dataTransfer.getData('html-content');
+    const checkboxStatus = e.dataTransfer.getData('checkbox-status');
 
-  return draggableElements.reduce((closest, child) => {
-    const box = child.getBoundingClientRect()
-    const offset = y - box.top - box.height / 2
-    if (offset < 0 && offset > closest.offset) {
-      return {
-        offset: offset,
-        element: child
-      }
-    } else {
-      return closest
-    }
-  }, {
-    offset: Number.NEGATIVE_INFINITY
-  }).element
+    e.target.innerHTML = HTMLContent;
+    e.target.querySelector('input').checked = (checkboxStatus === 'true');
+  }
+
 }
+
+function init() {
+  let dnd = new DND(); 
+  dnd.setEventListeners();  
+}
+
+let windowLoad = new Promise(function(resolve) {
+  window.addEventListener('load', resolve);
+});
+
+windowLoad.then(
+  function(result) {
+    init();
+  }
+);
+
+function updateStatus(event, status) {
+  event.target.nextElementSibling.classList.toggle('completed');
+  status[event.target.dataset.id].completed = event.target.checked;
+  return status;
+}
+function editTodo(event, editable) {
+  editable[event.target.dataset.index].description = event.target.value;
+  return editable;
+}
+
+const checkboxes = document.querySelectorAll('.checkbox');
+checkboxes.forEach((chbox) => {
+  chbox.addEventListener('change', (event) => {
+    const updatedTodo = updateStatus(event, updateLocal());
+    saveToStorage('TodoList', updatedTodo);
+  });
+});
+
+// function editTask() { // this is function for edit task
+//   document.getElementsByClassName('description').contentEditable = true;
+// }
+
+const editTask = index => {
+  todoItemElems[index].contentEditable = true;
+};
