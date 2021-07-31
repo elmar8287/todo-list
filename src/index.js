@@ -161,10 +161,6 @@ checkboxes.forEach((chbox) => {
   });
 });
 
-// function editTask() { // this is function for edit task
-//   document.getElementsByClassName('description').contentEditable = true;
-// }
-
 const editTask = index => {
   todoItemElems[index].contentEditable = true;
 };
