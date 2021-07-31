@@ -22,6 +22,16 @@ You can visit live version via [link](https://elmar8287.github.io/todo-list/)
 - webpack
 - JSON
 
+### Setup
+To run code locally, open your terminal and follow these steps:
+
+- `git clone (https://github.com/elmar8287/todo-list.git)`
+- `cd to-do-list` 
+- `npm install`
+- `npm start` 
+  
+*After `npm start` webpack will automatically open your browser.*
+
 ## Authors
 
 👤 **Elmar Abdulkarimov**
