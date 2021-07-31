@@ -8,7 +8,8 @@ Tasks to do:
 - Project 2: Interactive list.
 - Project 3: Add and remove items.
 
-## View short video ![here] (./src/TODO_ELMAR.mp4)
+## View short video
+![here] (./src/TODO_ELMAR.mp4)
 
 ## Live demo
 
