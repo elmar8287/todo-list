@@ -1,3 +1,4 @@
+/* eslint-disable */
 export class DND {
   constructor() {
     this.prevRow;
@@ -49,5 +50,5 @@ export class DND {
     e.target.innerHTML = HTMLContent;
     e.target.querySelector('input').checked = (checkboxStatus === 'true');
   }
-
 }
+/* eslint-anable */
